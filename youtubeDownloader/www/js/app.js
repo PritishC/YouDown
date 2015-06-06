@@ -5,7 +5,12 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('youDown', ['ionic', 'youDown.controllers', 'youDown.services'])
+angular.module('youDown', [
+  'ionic',
+  'youDown.controllers',
+  'youDown.services',
+  'youDown.directives'
+])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -31,32 +36,32 @@ angular.module('youDown', ['ionic', 'youDown.controllers', 'youDown.services'])
 
   // setup an abstract state for the tabs directive
     .state('tab', {
-    url: "/tab",
-    abstract: true,
-    templateUrl: "templates/tabs.html"
-  })
+      url: "/tab",
+      abstract: true,
+      templateUrl: "templates/tabs.html"
+    })
 
   // Each tab has its own nav history stack:
 
-  .state('tab.search', {
-    url: '/search',
-    views: {
-      'tab-search': {
-        templateUrl: 'templates/tab-search.html',
-        controller: 'SearchCtrl'
+    .state('tab.search', {
+      url: '/search',
+      views: {
+        'tab-search': {
+          templateUrl: 'templates/tab-search.html',
+          controller: 'SearchCtrl'
+        }
       }
-    }
-  })
-  
-  .state('tab.favorites', {
-    url: '/favorites',
-    views: {
-      'tab-favorites': {
-        templateUrl: 'templates/tab-favorites.html',
-        controller: 'FavoritesCtrl'
+    })
+
+    .state('tab.favorites', {
+      url: '/favorites',
+      views: {
+        'tab-favorites': {
+          templateUrl: 'templates/tab-favorites.html',
+          controller: 'FavoritesCtrl'
+        }
       }
-    }
-  });
+    });
   // TODO: Add more states
 
   // if none of the above states are matched, use this as the fallback

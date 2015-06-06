@@ -11,7 +11,7 @@ gulp.task('test', function() {
   return gulp.src('_')
   .pipe(karma({
     // TODO
-    configFile: 'test/karma.conf.js',
+    configFile: __dirname + '/tests/my.conf.js',
     action: 'run'
   }))
   .on('error', function(err) {

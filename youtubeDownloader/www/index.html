@@ -12,6 +12,18 @@
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
 
+    <!-- Hack because we can't avoid this shitty onload parameter -->
+    <!-- Need to think of better way -->
+    <script type="text/javascript">
+      function onClientLoad(){
+        gapi.client.load('youtube', 'v3', function(){
+          console.log("Setting API key");
+          gapi.client.setApiKey('AIzaSyA2v2ThMn_vO5pyIydxHCrcBntzy4rPGqc');
+        });
+      }
+    </script>
+    <script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
+
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
@@ -22,14 +34,17 @@
     <script src="js/app.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/services.js"></script>
+    <script src="js/directives.js"></script>
   </head>
   <body ng-app="youDown">
     <!--
       The nav bar that will be updated as we navigate between views.
     -->
     <ion-nav-bar class="bar-stable">
+      <!--
       <ion-nav-back-button>
       </ion-nav-back-button>
+      -->
     </ion-nav-bar>
     <!--
       The views will be rendered in the <ion-nav-view> directive below
