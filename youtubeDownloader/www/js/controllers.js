@@ -2,9 +2,10 @@ angular.module('youDown.controllers', [])
 
 .controller('SearchCtrl', [
   '$scope',
+  '$ionicPopup',
   'YoutubeClient',
   'Favorites',
-  function($scope, YoutubeClient, Favorites) {
+  function($scope, $ionicPopup, YoutubeClient, Favorites) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -23,11 +24,8 @@ angular.module('youDown.controllers', [])
       }
 
       $scope.videosLoading = true;
-
-      YoutubeClient.search(query, function(response){
-        $scope.$evalAsync(function(){
-          // Safe way to trigger digest
-          // ref: http://www.bennadel.com/blog/2605-scope-evalasync-vs-timeout-in-angularjs.htm
+      YoutubeClient.search(query)
+        .then(function(response){
           $scope.videoResults.items = response.items;
 
           angular.forEach($scope.videoResults.items, function(item){
@@ -35,9 +33,15 @@ angular.module('youDown.controllers', [])
               item.favorite = true;
             }
           });
+        }, function(reason) {
+          $ionicPopup.alert({
+            'title': 'Couldn\'t fetch videos',
+            'subTitle': reason
+          });
+        })
+        .finally(function() {
           $scope.videosLoading = false;
         });
-      });
     };
 
     $scope.toggleFavorite = function(video){
