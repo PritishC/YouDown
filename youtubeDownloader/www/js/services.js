@@ -8,7 +8,7 @@ angular.module('youDown.services', [])
     YoutubeClient.client = gapi.client;
 
     YoutubeClient.search = function(query, callback){
-      var request = YoutubeClient.youtube.search.list({
+      var request = YoutubeClient.client.youtube.search.list({
         q: query,
         part: 'snippet'
       });

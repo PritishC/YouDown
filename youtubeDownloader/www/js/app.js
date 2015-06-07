@@ -7,9 +7,9 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('youDown', [
   'ionic',
-  'youDown.controllers',
   'youDown.services',
-  'youDown.directives'
+  'youDown.directives',
+  'youDown.controllers',
 ])
 
 .run(function($ionicPlatform) {

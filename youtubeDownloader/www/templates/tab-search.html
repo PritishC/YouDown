@@ -3,8 +3,21 @@
     <div class="list list-inset">
       <label class="item item-input">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" ng-model="searchText" placeholder="Search">
+        <input type="text" ng-model="searchText" placeholder="Search"
+          ng-change="search(searchText)" ng-model-options="{ debounce: 400 }">
       </label>
+    </div>
+    <ion-list can-swipe="true">
+      <ion-item ng-repeat="video in videoResults.items">
+        <img ng-src="{{ video.snippet.thumbnails.default.url }}">
+        <h2>{{ video.snippet.title }}</h2>
+        <p>{{ video.snippet.description | limitTo: 100 }}</p>
+      </ion-item>
+    </ion-list>
+    <div class="row">
+      <div class="col text-center">
+        <ion-spinner ng-show="videosLoading"></ion-spinner>
+      </div>
     </div>
   </ion-content>
 </ion-view>
