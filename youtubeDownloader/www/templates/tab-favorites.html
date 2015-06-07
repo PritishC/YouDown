@@ -1,2 +1,20 @@
-<ion-view view-title="Favorites">
+<ion-view view-title="Favorites" cache-view="false">
+  <ion-content>
+    <ion-list can-swipe="true" ng-init="init()">
+      <ion-item ng-repeat="video in favorites">
+        <div class="row">
+          <div class="col col-90">
+            <img ng-src="{{ video.snippet.thumbnails.default.url }}">
+            <h2>{{ video.snippet.title }}</h2>
+            <p>{{ video.snippet.description | limitTo: 40 }}</p>
+          </div>
+          <div class="col text-right">
+            <span ng-click="remove(video)">
+              <i class="icon fav-icon ion-ios-close-empty"></i>
+            </span>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-view>

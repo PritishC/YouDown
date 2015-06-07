@@ -8,7 +8,6 @@
 angular.module('youDown', [
   'ionic',
   'youDown.services',
-  'youDown.directives',
   'youDown.controllers',
 ])
 

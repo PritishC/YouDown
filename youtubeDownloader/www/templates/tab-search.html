@@ -9,9 +9,23 @@
     </div>
     <ion-list can-swipe="true">
       <ion-item ng-repeat="video in videoResults.items">
-        <img ng-src="{{ video.snippet.thumbnails.default.url }}">
-        <h2>{{ video.snippet.title }}</h2>
-        <p>{{ video.snippet.description | limitTo: 100 }}</p>
+        <div class="row">
+          <div class="col col-90">
+            <img ng-src="{{ video.snippet.thumbnails.default.url }}">
+            <h2>{{ video.snippet.title }}</h2>
+            <p>{{ video.snippet.description | limitTo: 40 }}</p>
+          </div>
+          <div class="col text-right">
+            <span ng-click="toggleFavorite(video)">
+              <i class="icon fav-icon"
+                ng-class="{
+                  'ion-ios-star': video.favorite,
+                  'ion-ios-star-outline': !video.favorite,
+                  'energized': video.favorite
+                }"></i>
+              </span>
+          </div>
+        </div>
       </ion-item>
     </ion-list>
     <div class="row">

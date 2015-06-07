@@ -29,4 +29,37 @@ angular.module('youDown.services', [])
 
     return YoutubeInMp3;
   }
+])
+
+.factory('Favorites', [
+  function() {
+    var Favorites = this;
+
+    Favorites.data = [];
+
+    Favorites.contains = function(item){
+      // XXX: Perhaps use a higher-order function
+      for(var i = 0; i < Favorites.data.length; i++){
+        if(angular.equals(Favorites.data[i].id, item.id)){
+          return true;
+        }
+      }
+
+      return false;
+    };
+
+    Favorites.add = function(item){
+      item.favorite = true;
+      Favorites.data.push(item);
+    };
+
+    Favorites.remove = function(item){
+      item.favorite = false;
+      Favorites.data = Favorites.data.filter(function(element){
+        return !angular.equals(element.id, item.id);
+      });
+    };
+
+    return Favorites;
+  }
 ]);
