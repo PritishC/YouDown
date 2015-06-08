@@ -1,19 +1,28 @@
 angular.module('youDown.services', [])
 
 .factory('YoutubeClient', [
-  function() {
+  '$q',
+  function($q) {
     // Google's Youtube Data API Client
     var YoutubeClient = this;
 
     YoutubeClient.client = gapi.client;
 
-    YoutubeClient.search = function(query, callback){
+    YoutubeClient.search = function(query){
+      var deferred = $q.defer();
       var request = YoutubeClient.client.youtube.search.list({
         q: query,
         part: 'snippet'
       });
 
-      request.execute(callback);
+      request.execute(function(response) {
+        if(response.error) {
+          deferred.reject(response.message);
+        } else {
+          deferred.resolve(response);
+        }
+      });
+      return deferred.promise;
     };
 
     return YoutubeClient;
