@@ -1,11 +1,16 @@
+var initGapi = function(){
+  window.initGapi(); // Call the init function defined on the window
+};
+
 angular.module('youDown.controllers', [])
 
 .controller('SearchCtrl', [
   '$scope',
   '$ionicPopup',
+  '$window',
   'YoutubeClient',
   'Favorites',
-  function($scope, $ionicPopup, YoutubeClient, Favorites) {
+  function($scope, $ionicPopup, $window, YoutubeClient, Favorites) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -14,6 +19,21 @@ angular.module('youDown.controllers', [])
     //$scope.$on('$ionicView.enter', function(e) {
     //});
     $scope.videoResults = {};
+
+    // Define the global initGapi method on the window
+    $window.initGapi = function(){
+      $scope.$apply($scope.initGapi);
+    };
+
+    // Perform initialization on the scope's initGapi method
+    $scope.initGapi = function(){
+      YoutubeClient.init()
+        .then(function(){
+          console.log('Initialized successfully');
+        }, function(){
+          console.log('Initialization failed');
+        });
+    };
 
     $scope.search = function(query){
       // TODO: Add infinite scroll

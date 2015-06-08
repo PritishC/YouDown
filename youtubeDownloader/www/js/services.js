@@ -6,11 +6,20 @@ angular.module('youDown.services', [])
     // Google's Youtube Data API Client
     var YoutubeClient = this;
 
-    YoutubeClient.client = gapi.client;
+    YoutubeClient.init = function(){
+      var loaddefer = $q.defer();
+
+      gapi.client.load('youtube', 'v3', function(){
+        gapi.client.setApiKey('AIzaSyA2v2ThMn_vO5pyIydxHCrcBntzy4rPGqc');
+        loaddefer.resolve(gapi);
+      });
+
+      return loaddefer.promise;
+    };
 
     YoutubeClient.search = function(query){
       var deferred = $q.defer();
-      var request = YoutubeClient.client.youtube.search.list({
+      var request = gapi.client.youtube.search.list({
         q: query,
         part: 'snippet'
       });
