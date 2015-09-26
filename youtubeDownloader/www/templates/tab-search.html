@@ -8,12 +8,15 @@
       </label>
     </div>
     <ion-list can-swipe="true">
-      <ion-item ng-repeat="video in videoResults.items">
+      <ion-item ng-repeat="video in videoResults.items"
+        on-swipe="addToDownloadQueue(video)"
+        prevent-swipe cannot-swipe-if="{{ video.inDownload }}">
         <div class="row">
           <div class="col col-90">
             <img ng-src="{{ video.snippet.thumbnails.default.url }}">
             <h2>{{ video.snippet.title }}</h2>
             <p>{{ video.snippet.description | limitTo: 40 }}</p>
+            <p ng-if="video.inDownload"><strong>In Downloads Queue</strong></p>
           </div>
           <div class="col text-right">
             <span ng-click="toggleFavorite(video)">

@@ -9,6 +9,7 @@ angular.module('youDown', [
   'ionic',
   'youDown.services',
   'youDown.controllers',
+  'youDown.directives'
 ])
 
 .run(function($ionicPlatform) {

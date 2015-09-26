@@ -80,4 +80,36 @@ angular.module('youDown.services', [])
 
     return Favorites;
   }
+])
+
+.factory('Downloads', [
+  function() {
+    var Downloads = this;
+
+    Downloads.data = [];
+
+    Downloads.contains = function(item){
+      for(var i = 0; i < Downloads.data.length; i++){
+        if(angular.equals(Downloads.data[i].id, item.id)){
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    Downloads.add = function(item){
+      item.inDownload = true;
+      Downloads.data.push(item);
+    };
+
+    Downloads.remove = function(item){
+      item.inDownload = false;
+      Downloads.data = Downloads.data.filter(function(element){
+        return !angular.equals(element.id, item.id);
+      });
+    };
+
+    return Downloads;
+  }
 ]);

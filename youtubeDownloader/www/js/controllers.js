@@ -10,7 +10,8 @@ angular.module('youDown.controllers', [])
   '$window',
   'YoutubeClient',
   'Favorites',
-  function($scope, $ionicPopup, $window, YoutubeClient, Favorites) {
+  'Downloads',
+  function($scope, $ionicPopup, $window, YoutubeClient, Favorites, Downloads) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
@@ -52,6 +53,10 @@ angular.module('youDown.controllers', [])
             if(Favorites.contains(item)){
               item.favorite = true;
             }
+
+            if(Downloads.contains(item)){
+              item.inDownload = true;
+            }
           });
         }, function(reason) {
           $ionicPopup.alert({
@@ -70,6 +75,11 @@ angular.module('youDown.controllers', [])
       } else {
         Favorites.add(video);
       }
+    };
+
+    $scope.addToDownloadQueue = function(video){
+      $scope.videoResults.items.splice(video, 1);
+      Downloads.add(video);
     };
   }
 ])
