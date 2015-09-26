@@ -61,6 +61,16 @@ angular.module('youDown', [
           controller: 'FavoritesCtrl'
         }
       }
+    })
+
+    .state('tab.downloads', {
+      url: '/downloads',
+      views: {
+        'tab-downloads': {
+          templateUrl: 'templates/tab-downloads.html',
+          controller: 'DownloadsCtrl'
+        }
+      }
     });
   // TODO: Add more states
 

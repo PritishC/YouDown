@@ -39,11 +39,23 @@ angular.module('youDown.services', [])
 ])
 
 .factory('YoutubeInMp3', [
-  function() {
+  '$http',
+  function($http) {
     // YoutubeInMp3 API
     var YoutubeInMp3 = this;
 
-    // TODO: Define methods
+    YoutubeInMp3.getDownloadLink = function(video) {
+      // TODO: Rewrite this method with own API
+      return $http({
+        url: 'http://youtubeinmp3.com/fetch',
+        params: {
+          callback: 'JSON_CALLBACK',
+          format: 'JSON',
+          video: 'http%3A//www.youtube.com/watch?v=' + video.id.videoId
+        },
+        method: 'JSONP'
+      });
+    };
 
     return YoutubeInMp3;
   }
@@ -83,7 +95,8 @@ angular.module('youDown.services', [])
 ])
 
 .factory('Downloads', [
-  function() {
+  'YoutubeInMp3',
+  function(YoutubeInMp3) {
     var Downloads = this;
 
     Downloads.data = [];

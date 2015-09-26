@@ -36,6 +36,15 @@ angular.module('youDown.controllers', [])
         });
     };
 
+    // Method to check for whether our videos
+    // are present in service objects' data
+    var checkVideos = function() {
+      angular.forEach($scope.videoResults, function(item) {
+        item.favorite = Favorites.contains(item);
+        item.inDownload = Downloads.contains(item);
+      });
+    };
+
     $scope.search = function(query){
       // TODO: Add infinite scroll
       $scope.videoResults.items = [];
@@ -48,16 +57,7 @@ angular.module('youDown.controllers', [])
       YoutubeClient.search(query)
         .then(function(response){
           $scope.videoResults.items = response.items;
-
-          angular.forEach($scope.videoResults.items, function(item){
-            if(Favorites.contains(item)){
-              item.favorite = true;
-            }
-
-            if(Downloads.contains(item)){
-              item.inDownload = true;
-            }
-          });
+          checkVideos();
         }, function(reason) {
           $ionicPopup.alert({
             'title': 'Couldn\'t fetch videos',
@@ -81,6 +81,15 @@ angular.module('youDown.controllers', [])
       $scope.videoResults.items.splice(video, 1);
       Downloads.add(video);
     };
+
+    // Consolidated watcher to update
+    // videoResults item properties.
+    // Could've set cache-view=false,
+    // but that would mean performing
+    // the search repeatedly.
+    $scope.$on('$ionicView.enter', function(e) {
+      checkVideos();
+    });
   }
 ])
 
@@ -100,4 +109,12 @@ angular.module('youDown.controllers', [])
     };
   }
 
+])
+
+.controller('DownloadsCtrl', [
+  '$scope',
+  'Downloads',
+  function($scope, Downloads) {
+
+  }
 ]);
