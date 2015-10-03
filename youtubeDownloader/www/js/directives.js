@@ -9,7 +9,7 @@ angular.module('youDown.directives', [])
   function() {
     return {
       link: function(scope, element, attrs){
-        if(attrs.cannotSwipeIf) {
+        if(attrs.cannotSwipeIf === "true") {
           // Don't know how else to not call the function
           attrs.onSwipe = "";
 

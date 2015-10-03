@@ -1,2 +1,18 @@
-<ion-view view-title="Download Queue">
+<ion-view view-title="Download Queue" cache-view="false">
+  <ion-content>
+    <ion-list>
+      <ion-item ng-repeat="download in downloads">
+        <div class="row">
+          <div class="col col-70">
+            <img ng-src="{{ download.snippet.thumbnails.default.url }}">
+            <h2>{{ download.snippet.title }}</h2>
+            <p>{{ download.snippet.description | limitTo: 40 }}</p>
+          </div>
+          <div class="col text-right">
+            <progress max="1" value="{{ download.downloadProgress }}"></progress>            
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
 </ion-view>

@@ -39,7 +39,7 @@ angular.module('youDown.controllers', [])
     // Method to check for whether our videos
     // are present in service objects' data
     var checkVideos = function() {
-      angular.forEach($scope.videoResults, function(item) {
+      angular.forEach($scope.videoResults.items, function(item) {
         item.favorite = Favorites.contains(item);
         item.inDownload = Downloads.contains(item);
       });
@@ -115,6 +115,7 @@ angular.module('youDown.controllers', [])
   '$scope',
   'Downloads',
   function($scope, Downloads) {
-
+    // TODO: Progress bar and all downloads listed
+    $scope.downloads = Downloads.data;
   }
 ]);

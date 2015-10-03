@@ -13,6 +13,9 @@ plugins
 *.sw[po]
 *.log
 *.DS_Store
+# Keyfiles
+*.pem
+youdown-server.sh
 
 # Python
 # Byte-compiled / optimized / DLL files

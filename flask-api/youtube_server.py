@@ -1,6 +1,5 @@
 #!flask/bin/python
-import json
-from flask import Flask, jsonify, request
+from flask import Flask, request, jsonify, make_response
 import requests
 
 from decorators import *
@@ -13,7 +12,8 @@ app = Flask(__name__)
 def fetch_link():
     """
     Get the download link for a YouTube video.
-    Uses the YoutubeinMP3 API.
+    Uses the YoutubeinMP3 API. Serves the MP3
+    file as an attachment.
     """
     video_link = request.args.get('video')
 
@@ -24,25 +24,26 @@ def fetch_link():
         })
 
     try:
-        response = requests.get(
-            url='http://youtubeinmp3.com/fetch',
-            params={
-                'format': 'JSON',
-                'video': video_link,
-            }
+        audio_response = requests.get(
+            requests.get(
+                url='http://youtubeinmp3.com/fetch/',
+                params={
+                    'api': 'advanced',
+                    'format': 'JSON',
+                    'video': video_link,
+                }
+            ).json()['link']
         )
-        data = json.loads(response.text)
     except Exception as e:
         return jsonify({
             'status': 'FAIL',
             'message': e.message,
         })
 
-    return jsonify({
-        'status': 'SUCCESS',
-        'message': 'Successfully parsed video link',
-        'data': data['link']
-    })
+    response = make_response(audio_response.content)
+    response.headers['Content-Type'] = audio_response.headers['content-type']
+    response.headers['Content-Disposition'] = audio_response.headers['content-disposition']
+    return response
 
 
 if __name__ == '__main__':

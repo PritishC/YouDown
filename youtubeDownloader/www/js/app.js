@@ -7,10 +7,16 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('youDown', [
   'ionic',
+  'ngCordova',
   'youDown.services',
   'youDown.controllers',
   'youDown.directives'
 ])
+
+.constant("apiUrl", {
+  // Use sed script to replace the text below
+  url: "http://[[server_ip]]/api/"
+})
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
